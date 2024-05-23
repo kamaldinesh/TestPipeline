@@ -20,3 +20,15 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+    
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '/home/vsts/work/1/s/webapp/target'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    Contents: 'webapp.war'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'MyWarArtifact'
+    publishLocation: 'Container'
